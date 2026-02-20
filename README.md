@@ -4,7 +4,7 @@ A interactive, browser-based t-shirt design tool that allows users to upload ima
 
 ![T-Shirt Designer Preview](https://via.placeholder.com/800x400/2f4f6f/ffffff?text=Print+T-Shirt+Designer)
 
-## ✨ Features
+## Features
 
 - **Live Preview** - See your design on a realistic t-shirt mockup instantly
 - **Image Upload** - Drag & drop or click to upload PNG, JPG, or SVG files
@@ -17,11 +17,11 @@ A interactive, browser-based t-shirt design tool that allows users to upload ima
 - **Reset Options** - Individual print reset or full studio reset
 - **Fully Responsive** - Works on desktop and tablet devices
 
-## 🚀 Live Demo
+## Live Demo
 
 [View Live Demo](https://yourusername.github.io/print-tshirt-designer) *(Update with your GitHub Pages link)*
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - HTML5
 - CSS3 (Flexbox, Grid, Custom Properties)
@@ -29,7 +29,7 @@ A interactive, browser-based t-shirt design tool that allows users to upload ima
 - SVG for shirt template
 - FileReader API for image uploads
 
-## 📋 How to Use
+## How to Use
 
 1. **Upload an Image** - Click the upload box or drag an image file
 2. **Choose Shirt Color** - Click any color swatch below the shirt
@@ -37,7 +37,7 @@ A interactive, browser-based t-shirt design tool that allows users to upload ima
 4. **Position Design** - Click preset buttons for common placements
 5. **Experiment** - Try sample text, toggle visibility, or simulate background removal
 
-## 💻 Local Development
+## Local Development
 
 ### Prerequisites
 - Any modern web browser (Chrome, Firefox, Safari, Edge)
@@ -74,7 +74,7 @@ print-tshirt-designer/
 └── assets/            # (Optional) For images, icons
 ```
 
-## 🎨 Customization Options
+## Customization Options
 
 ### Adding More Shirt Colors
 Edit the color swatches in the HTML:
@@ -95,7 +95,7 @@ case 'your-position':
 ### Changing Shirt Template
 The shirt SVG can be modified in the `shirt-svg` element. Adjust the path coordinates for different shirt shapes.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Here's how you can help:
 
@@ -114,24 +114,26 @@ Contributions are welcome! Here's how you can help:
 - [ ] Add undo/redo functionality
 - [ ] Support for multiple print layers
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - SVG shirt template inspired by classic t-shirt design
 - Icons and UI elements from system fonts
 - Thanks to all contributors and testers
 
-## 📧 Contact
+## Contact & Support
 
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
+Om Gedam
 
-Project Link: [https://github.com/yourusername/print-tshirt-designer](https://github.com/yourusername/print-tshirt-designer)
+GitHub: @itsomg134
 
----
+Email: omgedam123098@gmail.com
 
-**Note**: This is a front-end demonstration project. The "remove background" feature is simulated and not a true background removal tool. For production use, consider integrating with professional image processing APIs.
+Twitter (X): @omgedam
 
-⭐ If you found this project useful, please consider giving it a star on GitHub!
+LinkedIn: Om Gedam
+
+Portfolio: https://ogworks.lovable.app
