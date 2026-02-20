@@ -2,7 +2,7 @@
 
 A interactive, browser-based t-shirt design tool that allows users to upload images, customize shirt colors, and position prints in real-time. Built with vanilla HTML, CSS, and JavaScript.
 
-![T-Shirt Designer Preview](https://via.placeholder.com/800x400/2f4f6f/ffffff?text=Print+T-Shirt+Designer)
+![Screenshot_20-2-2026_22119_127 0 0 1](https://github.com/user-attachments/assets/c9b48749-663b-41b3-a0a4-495549b997f3)
 
 ## Features
 
