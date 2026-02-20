@@ -19,7 +19,7 @@ A interactive, browser-based t-shirt design tool that allows users to upload ima
 
 ## Live Demo
 
-[View Live Demo](https://yourusername.github.io/print-tshirt-designer) *(Update with your GitHub Pages link)*
+https://drive.google.com/file/d/1El4ckxAnbKEA44cKv4AEYkjZG8ThxfzR/view?usp=vids_web
 
 ## Technologies Used
 
