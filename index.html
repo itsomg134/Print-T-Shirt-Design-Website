@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>◈ Print T‑shirt · design maker</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #e9eef2;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .design-studio {
+      max-width: 1320px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 40px -12px rgba(0,20,30,0.25);
+      padding: 2rem 2rem 2.5rem;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 2.2rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.8rem;
+      color: #1f2c38;
+      border-bottom: 3px solid #dbe5ec;
+      padding-bottom: 0.8rem;
+    }
+
+    h1 span {
+      background: #2e4053;
+      color: white;
+      font-size: 1rem;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-weight: 450;
+      letter-spacing: 0.3px;
+    }
+
+    .workspace {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    /* LEFT: preview + t-shirt */
+    .preview-area {
+      flex: 2;
+      min-width: 360px;
+      background: #f4f7fa;
+      border-radius: 2rem;
+      padding: 1.8rem 1.5rem 2rem;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.02), 0 8px 18px -8px rgba(40,50,60,0.2);
+    }
+
+    .shirt-canvas {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .shirt-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 12px 14px rgba(0,0,0,0.1));
+    }
+
+    .design-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .design-print {
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translate(-50%, -0%);
+      max-width: 46%;
+      max-height: 32%;
+      background: transparent;
+      pointer-events: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: all 0.1s ease;
+      object-fit: contain;
+    }
+
+    /* color swatches */
+    .color-panel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin: 1.8rem 0 0.5rem;
+      background: white;
+      padding: 1rem 1.2rem;
+      border-radius: 48px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+
+    .color-dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 44px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .color-dot.active {
+      border-color: #1f2c38;
+      transform: scale(1.1);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+    }
+
+    /* RIGHT: controls */
+    .controls {
+      flex: 1.2;
+      min-width: 300px;
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 10px 24px -12px #1f3a4b;
+      border: 1px solid #eef3f8;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.8px;
+      color: #4f6579;
+      margin: 1.4rem 0 0.6rem 0;
+      border-left: 4px solid #9bb7d4;
+      padding-left: 12px;
+    }
+
+    .section-label:first-of-type {
+      margin-top: 0.2rem;
+    }
+
+    .upload-box {
+      background: #f0f5fa;
+      border-radius: 24px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border: 2px dashed #a3bfd9;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .upload-box:hover {
+      background: #e3ecf3;
+    }
+
+    .upload-icon {
+      font-size: 2.4rem;
+      margin-bottom: 0.4rem;
+      opacity: 0.5;
+    }
+
+    .file-info {
+      font-size: 0.9rem;
+      background: #dee9f2;
+      padding: 0.5rem 1rem;
+      border-radius: 36px;
+      margin-top: 12px;
+      word-break: break-all;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 22px 0 8px;
+    }
+
+    .btn {
+      background: white;
+      border: 1.5px solid #c7dae9;
+      padding: 12px 20px;
+      border-radius: 40px;
+      font-weight: 550;
+      color: #1e3b4f;
+      cursor: pointer;
+      transition: 0.15s;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1 0 auto;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: #1d3f5c;
+      border-color: #1d3f5c;
+      color: white;
+      box-shadow: 0 4px 12px rgba(23,65,104,0.25);
+    }
+
+    .btn-primary:hover {
+      background: #133141;
+    }
+
+    .btn:hover {
+      background: #e4eef8;
+    }
+
+    .btn-primary:hover {
+      background: #143746;
+      border-color: #102f3c;
+    }
+
+    .slider-container {
+      background: #f1f7fc;
+      padding: 1rem 1.2rem;
+      border-radius: 40px;
+    }
+
+    input[type=range] {
+      width: 100%;
+      margin: 8px 0 4px;
+    }
+
+    .size-value {
+      font-weight: 600;
+      background: #cbdbe9;
+      padding: 2px 12px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+    }
+
+    .text-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 4px;
+    }
+
+    .preset-badge {
+      background: #eef3f8;
+      padding: 8px 16px;
+      border-radius: 36px;
+      font-weight: 500;
+      border: 1px solid #b8d0e3;
+      cursor: pointer;
+      transition: 0.1s;
+      font-size: 0.9rem;
+    }
+
+    .preset-badge:hover {
+      background: #d5e4f2;
+      border-color: #7fa3c2;
+    }
+
+    .footnote {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: #62788b;
+      text-align: center;
+      border-top: 1px solid #deecf5;
+      padding-top: 18px;
+    }
+
+    .reset-link {
+      text-decoration: underline dotted;
+      cursor: pointer;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+<div class="design-studio">
+  <h1>
+    ✦ PRINT T‑SHIRT DESIGNER
+    <span>live preview</span>
+  </h1>
+
+  <div class="workspace">
+    <!-- LEFT SIDE: shirt preview -->
+    <div class="preview-area">
+      <div class="shirt-canvas" id="shirtCanvas">
+        <!-- base shirt SVG (front view simplified) -->
+        <svg class="shirt-svg" viewBox="0 0 400 450" preserveAspectRatio="xMidYMid meet" id="shirtSvg">
+          <defs>
+            <filter id="softShadow" x="-0.02" y="-0.02" width="1.1" height="1.1">
+              <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.15"/>
+            </filter>
+          </defs>
+          <!-- main body (color fill will be changed dynamically) -->
+          <path id="shirtBody"
+                d="M70 140 L100 45 L150 20 L200 15 L250 20 L300 45 L330 140 L330 340 Q290 380 200 380 Q110 380 70 340 L70 140"
+                fill="#2f4f6f" stroke="#1f2e3c" stroke-width="2" filter="url(#softShadow)"/>
+          <!-- sleeves / details (optional, same color) -->
+          <path d="M70 140 Q40 170 40 220 Q40 270 70 300 L70 140" fill="#2f4f6f" stroke="#1f2e3c" stroke-width="1.5"/>
+          <path d="M330 140 Q360 170 360 220 Q360 270 330 300 L330 140" fill="#2f4f6f" stroke="#1f2e3c" stroke-width="1.5"/>
+          <!-- neck / collar -->
+          <circle cx="200" cy="80" r="33" fill="#d9cfc0" stroke="#a48e7a" stroke-width="2"/>
+          <circle cx="200" cy="80" r="21" fill="#b7a48e" stroke="#7d6b58" stroke-width="1.5"/>
+        </svg>
+
+        <!-- dynamic print image (user design) -->
+        <div class="design-layer">
+          <img id="printImage" class="design-print" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='10' y='55' font-family='Arial' font-size='14' fill='%23999'%3Eyour print%3C/text%3E%3C/svg%3E"
+               alt="user design" style="display: none;">
+        </div>
+      </div>
+
+      <!-- color picker row -->
+      <div class="color-panel" id="colorPalette">
+        <div class="color-dot active" style="background: #2f4f6f;" data-color="#2f4f6f" data-name="navy"></div>
+        <div class="color-dot" style="background: #5c3b1e;" data-color="#5c3b1e" data-name="brown"></div>
+        <div class="color-dot" style="background: #2b5e42;" data-color="#2b5e42" data-name="forest"></div>
+        <div class="color-dot" style="background: #4d3b2c;" data-color="#4d3b2c" data-name="taupe"></div>
+        <div class="color-dot" style="background: #2c3e4e;" data-color="#2c3e4e" data-name="slate"></div>
+        <div class="color-dot" style="background: #26221c;" data-color="#26221c" data-name="charcoal"></div>
+        <div class="color-dot" style="background: #4f3d3d;" data-color="#4f3d3d" data-name="maroon"></div>
+        <div class="color-dot" style="background: #253d3b;" data-color="#253d3b" data-name="teal"></div>
+      </div>
+      <p style="text-align:center; font-size:0.85rem; color:#476b84;">⬇ click swatch to change shirt color</p>
+    </div>
+
+    <!-- RIGHT SIDE: all tools -->
+    <div class="controls">
+      <!-- upload section -->
+      <div class="section-label">❶ upload artwork</div>
+      <div class="upload-box" id="dropZone">
+        <div class="upload-icon">🔼</div>
+        <strong>Click or drag PNG / JPG</strong>
+        <p style="font-size:0.8rem; margin-top:8px; color:#52758b;">(transparent background works best)</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg, image/svg+xml" style="display: none;">
+
+      <!-- current file name -->
+      <div id="fileInfo" class="file-info">no file selected · using placeholder</div>
+
+      <!-- size slider -->
+      <div class="section-label">❷ resize print</div>
+      <div class="slider-container">
+        <div style="display: flex; justify-content: space-between;">
+          <span>🔹 tiny</span>
+          <span class="size-value" id="sizePercent">100%</span>
+          <span>🔸 large</span>
+        </div>
+        <input type="range" id="sizeSlider" min="40" max="200" value="100" step="2">
+      </div>
+
+      <!-- position presets (quick align) + extra -->
+      <div class="section-label">❸ quick position</div>
+      <div class="text-presets">
+        <span class="preset-badge" data-pos="center">⬤ center</span>
+        <span class="preset-badge" data-pos="chest-left">◈ left chest</span>
+        <span class="preset-badge" data-pos="chest-right">◈ right chest</span>
+        <span class="preset-badge" data-pos="big-center">⬇ big center</span>
+      </div>
+
+      <!-- action buttons -->
+      <div class="section-label">❹ actions</div>
+      <div class="button-group">
+        <button class="btn" id="resetPrintBtn">↺ reset image</button>
+        <button class="btn btn-primary" id="removeBgBtn">✨ remove background (simulate)</button>
+      </div>
+      <div style="margin: 18px 0 10px;">
+        <button class="btn" id="sampleTextBtn">➕ add "DESIGN" sample</button>
+        <button class="btn" id="hidePrintBtn" style="flex:0.8;">👁 toggle print</button>
+      </div>
+
+      <!-- hint & download (just visual) -->
+      <div class="footnote">
+        ⚡ <span class="reset-link" id="fullReset">reset all</span> · right‑click save SVG (preview)<br>
+        <span style="opacity:0.6;">every change updates instantly</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- elements -----
+    const shirtBody = document.getElementById('shirtBody');
+    const shirtSvg = document.getElementById('shirtSvg'); // not used directly
+    const printImg = document.getElementById('printImage');
+    const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('dropZone');
+    const fileInfo = document.getElementById('fileInfo');
+    const colorDots = document.querySelectorAll('.color-dot');
+    const sizeSlider = document.getElementById('sizeSlider');
+    const sizeSpan = document.getElementById('sizePercent');
+    const resetPrintBtn = document.getElementById('resetPrintBtn');
+    const sampleTextBtn = document.getElementById('sampleTextBtn');
+    const hidePrintBtn = document.getElementById('hidePrintBtn');
+    const removeBgBtn = document.getElementById('removeBgBtn');
+    const fullReset = document.getElementById('fullReset');
+    const posBadges = document.querySelectorAll('.preset-badge');
+
+    // state
+    let currentColor = '#2f4f6f';          // default navy
+    let printVisible = true;
+    let baseImageSrc = null;                // dataURL of user image or sample
+
+    // ---- helper: update shirt color (fill both paths) ----
+    function setShirtColor(hexColor) {
+      const paths = document.querySelectorAll('#shirtBody, path[fill="#2f4f6f"]'); // also sleeves
+      paths.forEach(path => {
+        if (path.id !== 'shirtBody' && path.getAttribute('fill') !== currentColor) {
+          // only replace fill if it's the sleeves (both are set to #2f4f6f initially)
+          if (path.getAttribute('fill') === '#2f4f6f' || path.getAttribute('fill') === currentColor) {
+            path.setAttribute('fill', hexColor);
+          }
+        } else {
+          path.setAttribute('fill', hexColor);
+        }
+      });
+      // also explicitly select sleeves by d attribute (simple but safe: all shirt fills)
+      document.querySelectorAll('path[d^="M70 140 Q40"]').forEach(p => p.setAttribute('fill', hexColor));
+      document.querySelectorAll('path[d^="M330 140 Q360"]').forEach(p => p.setAttribute('fill', hexColor));
+      currentColor = hexColor;
+    }
+
+    // ---- load image to print (src can be dataURL or sample) ----
+    function setPrintImageSrc(src) {
+      if (src) {
+        printImg.src = src;
+        printImg.style.display = 'block';
+        baseImageSrc = src;
+        fileInfo.innerText = '✓ custom print loaded';
+      } else {
+        // fallback to placeholder grey (with text)
+        printImg.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23e2e9f0'/%3E%3Ctext x='18' y='58' font-family='system-ui' font-size='16' fill='%233d5f7a'%3E⤻ print%3C/text%3E%3C/svg%3E";
+        printImg.style.display = 'block';
+        baseImageSrc = null;
+        fileInfo.innerText = 'no file selected · using placeholder';
+      }
+    }
+
+    // ---- simulate remove bg (just a tint overlay effect) we can't truly remove bg, but replace with white-ish? ----
+    function applyRemoveBgEffect() {
+      if (!printImg.src) return;
+      // if current image src is a dataURL and we want to "remove background" we simply replace with an outline style (simulate)
+      // For demonstration, we replace with a generated SVG that has transparency
+      const fakeNoBg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='35' fill='%23ffaa55' stroke='%23333' stroke-width='4' /%3E%3Ctext x='28' y='62' fill='white' font-size='22' font-weight='bold'%3E☀%3C/text%3E%3C/svg%3E";
+      printImg.src = fakeNoBg;
+      baseImageSrc = fakeNoBg;
+      fileInfo.innerText = '✨ bg removed (demo)';
+    }
+
+    // ---- position presets (adjust using top/left/width) ----
+    function setPrintPosition(preset) {
+      const style = printImg.style;
+      switch (preset) {
+        case 'center':
+          style.top = '28%';
+          style.left = '50%';
+          style.transform = 'translate(-50%, -0%)';
+          style.maxWidth = '46%';
+          break;
+        case 'chest-left':
+          style.top = '28%';
+          style.left = '30%';
+          style.transform = 'translate(-50%, -0%)';
+          style.maxWidth = '30%';
+          break;
+        case 'chest-right':
+          style.top = '28%';
+          style.left = '70%';
+          style.transform = 'translate(-50%, -0%)';
+          style.maxWidth = '30%';
+          break;
+        case 'big-center':
+          style.top = '25%';
+          style.left = '50%';
+          style.transform = 'translate(-50%, -0%)';
+          style.maxWidth = '65%';
+          break;
+        default: break;
+      }
+    }
+
+    // ---- reset print to default placeholder ----
+    function resetToPlaceholder() {
+      setPrintImageSrc(null);  // sets placeholder
+      printImg.style.top = '28%';
+      printImg.style.left = '50%';
+      printImg.style.transform = 'translate(-50%, -0%)';
+      printImg.style.maxWidth = '46%';
+      sizeSlider.value = 100;
+      sizeSpan.innerText = '100%';
+    }
+
+    // ---- hide/show toggle ----
+    function togglePrint() {
+      if (printVisible) {
+        printImg.style.opacity = '0';
+        hidePrintBtn.innerHTML = '👁 show print';
+      } else {
+        printImg.style.opacity = '1';
+        hidePrintBtn.innerHTML = '👁 toggle print';
+      }
+      printVisible = !printVisible;
+    }
+
+    // ---- initialize ----
+    function init() {
+      // set default shirt color
+      setShirtColor('#2f4f6f');
+
+      // color picker click
+      colorDots.forEach(dot => {
+        dot.addEventListener('click', e => {
+          colorDots.forEach(d => d.classList.remove('active'));
+          dot.classList.add('active');
+          const color = dot.dataset.color;
+          setShirtColor(color);
+        });
+      });
+
+      // file upload via dropzone
+      dropZone.addEventListener('click', () => fileInput.click());
+      dropZone.addEventListener('dragover', e => e.preventDefault());
+      dropZone.addEventListener('drop', e => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+          handleFile(file);
+        }
+      });
+      fileInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (file) handleFile(file);
+      });
+
+      function handleFile(file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          setPrintImageSrc(ev.target.result);
+          printImg.style.opacity = '1'; // ensure visible
+          printVisible = true;
+          hidePrintBtn.innerHTML = '👁 toggle print';
+          // also reset slider to 100? not necessary, but could.
+          sizeSlider.value = 100;
+          sizeSpan.innerText = '100%';
+          printImg.style.maxWidth = '46%'; // default
+          printImg.style.top = '28%';
+          printImg.style.left = '50%';
+          printImg.style.transform = 'translate(-50%, -0%)';
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // size slider
+      sizeSlider.addEventListener('input', () => {
+        const val = sizeSlider.value;
+        sizeSpan.innerText = val + '%';
+        // we adjust max-width accordingly, keep base ~46% of container * factor
+        // simpler: directly change width relative to container using maxWidth scaling
+        const base = 46; // reference %
+        printImg.style.maxWidth = (base * val / 100) + '%';
+      });
+
+      // position badges
+      posBadges.forEach(b => {
+        b.addEventListener('click', () => {
+          const pos = b.dataset.pos;
+          setPrintPosition(pos);
+        });
+      });
+
+      // reset print (to placeholder)
+      resetPrintBtn.addEventListener('click', resetToPlaceholder);
+
+      // sample text (add a sample "DESIGN" image)
+      sampleTextBtn.addEventListener('click', () => {
+        const sampleSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120' viewBox='0 0 200 120'%3E%3Crect width='200' height='120' fill='%23345a8a' rx='15' /%3E%3Ctext x='25' y='72' font-family='Arial Black' font-size='48' fill='%23ffffff' %3EDESIGN%3C/text%3E%3C/svg%3E";
+        setPrintImageSrc(sampleSvg);
+        printImg.style.opacity = '1';
+        printVisible = true;
+        hidePrintBtn.innerHTML = '👁 toggle print';
+        sizeSlider.value = 100;
+        sizeSpan.innerText = '100%';
+        printImg.style.maxWidth = '46%';
+        printImg.style.top = '28%';
+        printImg.style.left = '50%';
+        printImg.style.transform = 'translate(-50%, -0%)';
+      });
+
+      // toggle hide/show
+      hidePrintBtn.addEventListener('click', togglePrint);
+
+      // remove bg simulation
+      removeBgBtn.addEventListener('click', () => {
+        applyRemoveBgEffect();
+        printVisible = true;
+        printImg.style.opacity = '1';
+        hidePrintBtn.innerHTML = '👁 toggle print';
+      });
+
+      // full reset (shirt color to navy, reset print placeholder, size 100, default position)
+      fullReset.addEventListener('click', () => {
+        // set active navy
+        colorDots.forEach(d => d.classList.remove('active'));
+        document.querySelector('.color-dot[data-color="#2f4f6f"]').classList.add('active');
+        setShirtColor('#2f4f6f');
+        resetToPlaceholder();
+        printImg.style.opacity = '1';
+        printVisible = true;
+        hidePrintBtn.innerHTML = '👁 toggle print';
+        printImg.style.maxWidth = '46%';
+        printImg.style.top = '28%';
+        printImg.style.left = '50%';
+        printImg.style.transform = 'translate(-50%, -0%)';
+        sizeSlider.value = 100;
+        sizeSpan.innerText = '100%';
+      });
+
+      // set initial print visible (placeholder)
+      printImg.style.display = 'block';
+      printImg.style.opacity = '1';
+    }
+
+    init();
+  })();
+</script>
+</body>
+</html>
